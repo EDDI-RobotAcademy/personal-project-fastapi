@@ -1,1 +1,1 @@
-# personal-project-fastapi
+# individual-project-python
