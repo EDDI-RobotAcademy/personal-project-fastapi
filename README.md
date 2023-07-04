@@ -1,1 +1,1 @@
-# personal-project-fastapi
+# fastapi-for-aws-deploy-test
