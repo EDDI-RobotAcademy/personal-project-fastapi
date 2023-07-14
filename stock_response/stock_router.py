@@ -1,18 +1,13 @@
 from fastapi import APIRouter
 import yfinance as yf
 
-stock_test_router = APIRouter()
-
-# @app.get("/stock/{ticker}")
-# async def stock_ticker(ticker:str):
-#     return {'ticker' : ticker}
-
-@stock_test_router.get("/stock/{ticker}/{period}/{interval}")
-async def stock_OHCL_test(ticker:str, period:str, interval:str):
+stock_response_router = APIRouter()
+@stock_response_router.get("/stock/{ticker}/{period}/{interval}")
+async def stock_response_OHCL(ticker:str, period:str, interval:str):
 
     ticker = ticker + '.KS'
-
     result = yf.download(ticker, interval=interval, period=period)
+
     minute_data = []
     for index, row in result.iterrows():
         date = index.strftime('%Y-%m-%d %H:%M')  # 날짜, 시간, 분을 문자열로 변환

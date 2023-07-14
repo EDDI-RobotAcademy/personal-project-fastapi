@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from news_crawler.crawler_test import news_crawler_router
 from save_ticker.save_ticker_router import save_ticker_router
-from stock_test.stock_test_router import stock_test_router
+from stock_response.stock_router import stock_response_router
 
 app = FastAPI()
 
@@ -21,6 +22,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-app.include_router(stock_test_router)
+app.include_router(stock_response_router)
 app.include_router(save_ticker_router)
+app.include_router(news_crawler_router)
 
