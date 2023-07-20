@@ -19,7 +19,9 @@ async def board_crawler(ticker:str):
     driver = webdriver.Chrome(executable_path='D:/project/personal-project-fastapi/board_crawler/chromedriver.exe', chrome_options=chrome_options)
 
     code = ticker
+
     crawling_result = []
+
     for i in range(1, 2):
         URL = f"https://finance.naver.com/item/board.naver?code={code}&page={i}"
 
@@ -28,7 +30,6 @@ async def board_crawler(ticker:str):
 
         titles = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "title")))
 
-        title_list = []
         link_list = []
 
         for title in titles:
@@ -40,7 +41,6 @@ async def board_crawler(ticker:str):
             title_text = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', title_text)
             crawling_result.append(title_text)
 
-        contents = []
         for link in link_list:
             original_url = driver.current_url
             driver.get(link)
@@ -49,9 +49,6 @@ async def board_crawler(ticker:str):
             content = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', content)
             crawling_result.append(content)
             driver.get(original_url)
-
-        print("title_list: ", title_list)
-        print("contents: ",contents)
 
     for item in crawling_result:
         result = kiwi.tokenize(item)
