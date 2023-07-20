@@ -9,7 +9,7 @@ from stock_response.stock_router import stock_response_router
 app = FastAPI()
 
 origins = [
-    "http://localhost:8080",  # 허용하려는 프론트엔드 도메인 주소
+    "http://localhost:8080",
 ]
 
 app.add_middleware(
@@ -19,12 +19,14 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
 
 app.include_router(board_crawler_router)
 app.include_router(stock_response_router)
 app.include_router(save_ticker_router)
 app.include_router(news_crawler_router)
-
