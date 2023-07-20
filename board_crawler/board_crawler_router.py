@@ -1,3 +1,6 @@
+import re
+
+from PyKomoran import *
 from fastapi import FastAPI
 from fastapi import APIRouter
 from selenium import webdriver
@@ -34,6 +37,7 @@ async def board_crawler(ticker:str):
             link_list.append(link)
 
             title_text = title.text
+            title_text = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', title_text)
             title_list.append(title_text)
 
         contents = []
@@ -42,9 +46,10 @@ async def board_crawler(ticker:str):
             driver.get(link)
 
             content = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "scr01"))).text
+            content = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', content)
             contents.append(content)
             driver.get(original_url)
 
-        print(contents)
-        print(title_list)
+        print("title_list: ", title_list)
+        print("contents: ",contents)
     driver.quit()
