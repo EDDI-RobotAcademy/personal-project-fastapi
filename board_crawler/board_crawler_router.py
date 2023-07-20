@@ -1,8 +1,8 @@
 import re
 
-from PyKomoran import *
 from fastapi import FastAPI
 from fastapi import APIRouter
+from kiwipiepy import Kiwi
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 
 app = FastAPI()
 board_crawler_router = APIRouter()
-
+kiwi = Kiwi(model_type='knlm')
 @board_crawler_router.get("/board-crawler/{ticker}")
 async def board_crawler(ticker:str):
     chrome_options = webdriver.ChromeOptions()
@@ -19,7 +19,7 @@ async def board_crawler(ticker:str):
     driver = webdriver.Chrome(executable_path='D:/project/personal-project-fastapi/board_crawler/chromedriver.exe', chrome_options=chrome_options)
 
     code = ticker
-
+    crawling_result = []
     for i in range(1, 2):
         URL = f"https://finance.naver.com/item/board.naver?code={code}&page={i}"
 
@@ -38,7 +38,7 @@ async def board_crawler(ticker:str):
 
             title_text = title.text
             title_text = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', title_text)
-            title_list.append(title_text)
+            crawling_result.append(title_text)
 
         contents = []
         for link in link_list:
@@ -47,9 +47,21 @@ async def board_crawler(ticker:str):
 
             content = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "scr01"))).text
             content = re.sub(r'[-=+,#/\?:^.\@*\"※~ㆍ!』‘\|\(\)\[\]`\'…》\”\“\’·a-zA-Z0-9\n]', '', content)
-            contents.append(content)
+            crawling_result.append(content)
             driver.get(original_url)
 
         print("title_list: ", title_list)
         print("contents: ",contents)
+
+    for item in crawling_result:
+        result = kiwi.tokenize(item)
+
+        tokens = []
+
+        for token in result:
+            if token.tag in ['NNG', 'NNP', 'VA', 'VV', 'MAG']:
+                tokens.append(token.form)
+
+        print(tokens)
+
     driver.quit()
