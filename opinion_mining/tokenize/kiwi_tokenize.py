@@ -7,6 +7,7 @@ class KiwiTokenizer:
         result = kiwi.tokenize(text)
 
         tokens = []
+
         for token in result:
             if token.tag in ['NNG', 'NNP', 'VA', 'VV', 'MAG', 'XR', 'SL']:
                 tokens.append(token.form)

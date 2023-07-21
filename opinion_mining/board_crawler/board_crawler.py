@@ -28,7 +28,7 @@ class BoardCrawler():
 
         self.wait = WebDriverWait(self.driver, 1)
 
-        for i in range(1, 11):
+        for i in range(1, 6):
             URL = f"https://finance.naver.com/item/board.naver?code={code}&page={i}"
             self.url_list.append(URL)
     def multi_thread_crawl(self):
