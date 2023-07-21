@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from board_crawler.board_crawler_router import board_crawler_router
+from opinion_mining.board_crawler.board_crawler_router import board_crawler_router
 from news_crawler.crawler_test import news_crawler_router
 from save_ticker.save_ticker_router import save_ticker_router
 from stock_response.stock_router import stock_response_router

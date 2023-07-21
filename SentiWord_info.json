@@ -1025,6 +1025,11 @@
 	"polarity": "-2"
 },
 {
+	"word": "가자",
+	"word_root": "가자",
+	"polarity": "2"
+},
+{
 	"word": "가장 거룩한",
 	"word_root": "가장 거룩",
 	"polarity": "2"
@@ -1053,6 +1058,11 @@
 	"word": "가장 중요한",
 	"word_root": "가장 중요",
 	"polarity": "1"
+},
+{
+	"word": "가즈아",
+	"word_root": "가즈",
+	"polarity": "2"
 },
 {
 	"word": "가증맞다",
