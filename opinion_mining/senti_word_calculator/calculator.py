@@ -28,7 +28,6 @@ class SentiWordCalculator:
                     found = True
                     break
 
-            # If the token is not found in the sentiment dictionary, treat it as neutral.
             if not found:
                 self.neutral_count += 1
 

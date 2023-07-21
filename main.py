@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from news_crawler.crawler_test import news_crawler_router
 from opinion_mining.opinion_mining_router import opinion_mining_router
-from save_ticker.save_ticker_router import save_ticker_router
-from stock_response.stock_router import stock_response_router
+from stock.save_ticker.save_ticker_router import save_ticker_router
+from stock.stock_OHCL_response.stock_router import stock_response_router
 
 app = FastAPI()
 
