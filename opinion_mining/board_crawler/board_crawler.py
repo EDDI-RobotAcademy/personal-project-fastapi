@@ -1,8 +1,6 @@
-import concurrent.futures
+import os
 import re
-import time
 from concurrent.futures import ThreadPoolExecutor
-from multiprocessing import Pool
 
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -15,13 +13,14 @@ class BoardCrawler():
         self.ticker = ticker
         self.url_list = []
 
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        chromedriver_path = os.path.join(current_directory, "chromedriver.exe")
+
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("headless")
         chrome_options.add_argument(
             "user-agent=Mozilla/5.0 (X11; CrOS x86_64 12871.102.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.141 Safari/537.36")
-        self.driver = webdriver.Chrome(
-            executable_path='D:/project/personal-project-fastapi/opinion_mining/board_crawler/chromedriver.exe',
-            options=chrome_options)
+        self.driver = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
 
         code = ticker
         self.crawling_result = []
