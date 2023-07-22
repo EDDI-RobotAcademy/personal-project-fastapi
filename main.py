@@ -1,18 +1,19 @@
 from fastapi import FastAPI
 import requests
 from bs4 import BeautifulSoup
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 if __name__ == '__main__':
     print("Hello")
 
-origins = ["http://localhost:8080"]
-from fastapi.middleware.cors import CORSMiddleware
+origins = ["http://localhost:7777"]
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
