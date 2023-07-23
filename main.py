@@ -26,6 +26,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
+
 app.include_router(top30_router)
 app.include_router(opinion_mining_router)
 app.include_router(stock_response_router)
