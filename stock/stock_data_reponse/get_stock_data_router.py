@@ -1,19 +1,14 @@
 import datetime
-
 from fastapi import APIRouter
 from pykrx import stock
 
-# OHCLVA "시가", "종가", "변동폭", "등락률", "거래량", "거래대금"
-# ascending: True, False
-
-class Top30Stock(APIRouter):
+class GetStockDataOCVA(APIRouter):
 
     def __init__(self):
         super().__init__()
 
     @classmethod
-    def get_top_stock_data(cls, OHCLVA: str, ascending: bool):
-
+    def get_stock_data(cls, OHCLVA: str, ascending: bool):
         today = datetime.date.today()
         weekday = today.weekday()
 
@@ -28,13 +23,20 @@ class Top30Stock(APIRouter):
         yesterday = yesterday.strftime('%Y%m%d')
 
         df = stock.get_market_price_change_by_ticker(yesterday, today)
-
         selected_df = df[["시가", "종가", "변동폭", "등락률", "거래량", "거래대금"]].sort_values(by=OHCLVA, ascending=ascending)
-        return selected_df.head(30)
 
-top30_router = Top30Stock()
+        # '티커'를 인덱스에서 추출하여 열로 추가
+        selected_df.reset_index(inplace=True)
 
-@top30_router.get("/stock/list/{OHCLVA}/{ascending}")
+        # 선택된 레코드를 프린트
+        print("Selected Record:")
+        print(selected_df.to_dict(orient="records") if not selected_df.empty else {})
+
+        return selected_df.to_dict(orient="records") if not selected_df.empty else {}
+
+get_stock_data_router = GetStockDataOCVA()
+
+@get_stock_data_router.get("/stock/list/{OHCLVA}/{ascending}")
 async def change_stock_price(OHCLVA: str, ascending: bool):
-    selected_df = Top30Stock.get_top_stock_data(OHCLVA, ascending)
-    return selected_df.to_dict(orient="index")
+    selected_data = GetStockDataOCVA.get_stock_data(OHCLVA, ascending)
+    return selected_data
