@@ -51,7 +51,7 @@ def get_lyrics_by_song_id(song_id):
 
     if lyrics:
         for br in lyrics.find_all("br"):
-            br.replace_with("&#10;")
+            br.replace_with("<br>")
         return lyrics.get_text().strip()
 
     return None
