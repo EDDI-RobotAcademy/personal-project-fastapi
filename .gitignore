@@ -1,0 +1,5 @@
+.idea
+*.pyc
+
+app/email_info/account
+app/flight_api/flight_api
