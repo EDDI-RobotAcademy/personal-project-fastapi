@@ -1,14 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from news_crawler.crawler_test import news_crawler_router
-from save_ticker.save_ticker_router import save_ticker_router
-from stock_response.stock_router import stock_response_router
+from article.news_crawler.crawler_test import news_crawler_router
+from opinion_mining.opinion_mining_router import opinion_mining_router
+from stock.save_ticker.save_ticker_router import save_ticker_router
+from stock.stock_OHCL_response.stock_router import stock_response_router
+from stock.stock_data_reponse.get_stock_data_router import get_stock_data_router
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:8080",  # 허용하려는 프론트엔드 도메인 주소
+    "http://localhost:8080",
 ]
 
 app.add_middleware(
@@ -18,11 +20,15 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
+
+app.include_router(get_stock_data_router)
+app.include_router(opinion_mining_router)
 app.include_router(stock_response_router)
 app.include_router(save_ticker_router)
 app.include_router(news_crawler_router)
-
