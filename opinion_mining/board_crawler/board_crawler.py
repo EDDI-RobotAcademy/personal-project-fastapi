@@ -20,7 +20,7 @@ class BoardCrawler():
         chrome_options.add_argument("headless")
         chrome_options.add_argument(
             "user-agent=Mozilla/5.0 (X11; CrOS x86_64 12871.102.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.141 Safari/537.36")
-        self.driver = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+        self.driver = webdriver.Chrome(options=chrome_options)
 
         code = ticker
         self.crawling_result = []
