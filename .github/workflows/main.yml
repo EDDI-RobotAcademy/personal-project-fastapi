@@ -1,24 +1,3 @@
-Skip to content
-ryukyungwoo
-/
-personal-project-fastapi
-
-Type / to search
-
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Deploy to AWS
-Merge remote-tracking branch 'old-origin/main' #1
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/main.yml at a6c9c1a
 name: Deploy to AWS
 
 on:
@@ -103,17 +82,3 @@ jobs:
             docker logout
             
             docker-compose up -d
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-File not found
