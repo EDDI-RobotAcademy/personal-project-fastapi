@@ -1,6 +1,7 @@
 import datetime
 from fastapi import APIRouter
 from pykrx import stock
+import asyncio
 
 class GetStockDataOCVA(APIRouter):
 
@@ -34,9 +35,15 @@ class GetStockDataOCVA(APIRouter):
 
         return selected_df.to_dict(orient="records") if not selected_df.empty else {}
 
+
+async def async_get_stock_data(OHCLVA: str, ascending: bool):
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(None, GetStockDataOCVA.get_stock_data, OHCLVA, ascending)
+    return result
+
 get_stock_data_router = GetStockDataOCVA()
 
 @get_stock_data_router.get("/stock/list/{OHCLVA}/{ascending}")
 async def change_stock_price(OHCLVA: str, ascending: bool):
-    selected_data = GetStockDataOCVA.get_stock_data(OHCLVA, ascending)
+    selected_data = await async_get_stock_data(OHCLVA, ascending)
     return selected_data

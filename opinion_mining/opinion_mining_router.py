@@ -1,3 +1,4 @@
+import asyncio
 import json
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from timeit import timeit
@@ -27,25 +28,29 @@ class OpinionMiningResult:
         self.total_negative_count += sentiment_score.negative_count
         self.total_neutral_count += sentiment_score.neutral_count
 
-def process_item(item):
+async def process_item(item):
     kiwi_tokenizer = KiwiTokenizer()
-    tokens = kiwi_tokenizer.kiwi_tokenize(item)
+    tokens = await kiwi_tokenizer.kiwi_tokenize(item)
     sentiment_score = SentiWordCalculator(tokens, sentiment_dictionary)
     return sentiment_score
 
+
+async def async_process_item(item):
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(None, process_item, item)
+    return result
 @opinion_mining_router.get("/opinion-mining/{ticker}")
 async def opinion_mining(ticker: str):
 
     senti_score_result = OpinionMiningResult()
-
     crawler = BoardCrawler(ticker)
-    crawling_result = crawler.multi_thread_crawl()
+    crawling_result = await crawler.multi_thread_crawl()
 
-    with ThreadPoolExecutor(max_workers=12) as executor:
-        for items in crawling_result:
-            sentiment_scores = list(executor.map(process_item, items))
-            for sentiment_score in sentiment_scores:
-                senti_score_result.update(sentiment_score)
+    sentiment_tasks = [async_process_item(item) for items in crawling_result for item in items]
+    sentiment_scores = await asyncio.gather(*sentiment_tasks)
+
+    for sentiment_score in sentiment_scores:
+        senti_score_result.update(sentiment_score)
 
     return {
         "total_sentiment_score": senti_score_result.total_sentiment_score,
