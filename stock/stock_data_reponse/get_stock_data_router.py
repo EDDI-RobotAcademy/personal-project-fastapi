@@ -29,10 +29,6 @@ class GetStockDataOCVA(APIRouter):
         # '티커'를 인덱스에서 추출하여 열로 추가
         selected_df.reset_index(inplace=True)
 
-        # 선택된 레코드를 프린트
-        print("Selected Record:")
-        print(selected_df.to_dict(orient="records") if not selected_df.empty else {})
-
         return selected_df.to_dict(orient="records") if not selected_df.empty else {}
 
 
