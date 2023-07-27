@@ -1,8 +1,7 @@
-from fastapi import FastAPI
-from fastapi import APIRouter
 import httpx
 from bs4 import BeautifulSoup
-from urllib.parse import unquote
+from fastapi import APIRouter
+from fastapi import FastAPI
 
 app = FastAPI()
 news_crawler_router = APIRouter()

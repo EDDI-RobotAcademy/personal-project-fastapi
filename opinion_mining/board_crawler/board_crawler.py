@@ -1,8 +1,13 @@
-import os
 import re
 import asyncio
 import aiohttp
 from bs4 import BeautifulSoup
+import asyncio
+import re
+
+import aiohttp
+from bs4 import BeautifulSoup
+
 
 class BoardCrawler():
     def __init__(self, ticker):
