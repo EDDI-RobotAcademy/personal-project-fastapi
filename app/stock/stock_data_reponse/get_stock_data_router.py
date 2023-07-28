@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from pykrx import stock
 import asyncio
 
+
 class GetStockDataOCVA(APIRouter):
 
     def __init__(self):
@@ -37,7 +38,9 @@ async def async_get_stock_data(OHCLVA: str, ascending: bool):
     result = await loop.run_in_executor(None, GetStockDataOCVA.get_stock_data, OHCLVA, ascending)
     return result
 
+
 get_stock_data_router = GetStockDataOCVA()
+
 
 @get_stock_data_router.get("/stock/list/{OHCLVA}/{ascending}")
 async def change_stock_price(OHCLVA: str, ascending: bool):

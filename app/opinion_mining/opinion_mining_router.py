@@ -11,6 +11,7 @@ opinion_mining_router = APIRouter()
 with open("SentiWord_info.json", "r", encoding='utf-8') as f:
     sentiment_dictionary = json.load(f)
 
+
 class OpinionMiningResult:
     def __init__(self):
         self.total_sentiment_score = 0
@@ -24,11 +25,13 @@ class OpinionMiningResult:
         self.total_negative_count += sentiment_score.negative_count
         self.total_neutral_count += sentiment_score.neutral_count
 
+
 def process_item(item):
     kiwi_tokenizer = KiwiTokenizer()
     tokens = kiwi_tokenizer.kiwi_tokenize(item)
     sentiment_score = SentiWordCalculator(tokens, sentiment_dictionary)
     return sentiment_score
+
 
 @opinion_mining_router.get("/opinion-mining/{ticker}")
 async def opinion_mining(ticker: str):

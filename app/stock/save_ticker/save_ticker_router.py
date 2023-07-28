@@ -3,6 +3,8 @@ from pykrx import stock
 from datetime import datetime
 
 save_ticker_router = APIRouter()
+
+
 @save_ticker_router.get("/stock/save-data")
 async def save_stock_ticker_name_to_spring():
     class MarketTicker():
