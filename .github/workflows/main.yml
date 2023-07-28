@@ -21,11 +21,11 @@ jobs:
       - name: Configure Docker
         uses: docker/setup-buildx-action@v1
         
-      - name: Create SentiWord_info.json for CD Deploy
-        run: |
-          ls
-          echo "${{ secrets.Senti_Word }}" > ./SentiWord_info.json
-          cat ./SentiWord_info.json
+#       - name: Create SentiWord_info.json for CD Deploy
+#         run: |
+#           ls
+#           echo "${{ secrets.Senti_Word }}" > ./SentiWord_info.json
+#           cat ./SentiWord_info.json
 
       - name: Cache Docker Layers
         uses: actions/cache@v2
