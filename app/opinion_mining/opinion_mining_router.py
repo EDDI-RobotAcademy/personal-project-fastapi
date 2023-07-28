@@ -8,7 +8,7 @@ from app.opinion_mining.tokenize.kiwi_tokenize import KiwiTokenizer
 app = FastAPI()
 opinion_mining_router = APIRouter()
 
-with open("SentiWord_info.json", "r", encoding='utf-8') as f:
+with open("app/SentiWord_info.json", "r", encoding='utf-8') as f:
     sentiment_dictionary = json.load(f)
 
 
