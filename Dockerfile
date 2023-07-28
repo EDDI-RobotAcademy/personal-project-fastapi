@@ -1,5 +1,7 @@
 FROM arm64v8/python:3.8
 
+COPY SentiWord_info.json /app/SentiWord_info.json
+
 COPY ./app /app
 COPY requirements.txt /app
 WORKDIR ./
