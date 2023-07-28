@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   app:
-    image: ghcr.io/namhyunki/fast-api-deploy-server:latest
+    image: ghcr.io/ryukyungwoo/personal-project-fastapi:latest
     container_name: docker-fast-api-deploy-server
     ports:
       - 8000:8000
