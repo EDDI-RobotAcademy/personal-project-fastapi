@@ -1,11 +1,13 @@
 FROM arm64v8/python:3.8
 
+COPY SentiWord_info.json /app/SentiWord_info.json
+
 COPY ./app /app
 COPY requirements.txt /app
-WORKDIR /app
+WORKDIR ./
 
-RUN pip install -r requirements.txt
+RUN pip install -r app/requirements.txt
 
 EXPOSE 80
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
