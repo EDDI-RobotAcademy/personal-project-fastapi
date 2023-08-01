@@ -1,0 +1,6 @@
+naver_search_api.ini
+/ca_bundle.crt
+/certificate.crt
+/certificate.pem
+/private.key
+.env
